@@ -1,0 +1,69 @@
+exchange:
+  api_key: ${OKX_API_KEY}
+  secret_key: ${OKX_SECRET_KEY}
+  passphrase: ${OKX_PASSPHRASE}
+  testnet: false
+  rate_limit:
+    requests_per_second: 10
+    burst: 20
+
+symbols:
+  - BTC-USDT
+  - ETH-USDT
+
+strategy:
+  indicators:
+    ema_periods: [5, 20, 50]
+    rsi_period: 14
+    atr_period: 14
+    macd_fast: 12
+    macd_slow: 26
+    macd_signal: 9
+  entry:
+    min_confidence: 0.65
+    ema_convergence_threshold: 0.002
+    trend_strength_threshold: 0.6
+  exit:
+    stop_loss_atr_multiplier: 2.0
+    take_profit_atr_multiplier: 3.0
+    trailing_stop_enabled: false
+    trailing_stop_atr_multiplier: 1.5
+
+risk:
+  order:
+    max_single_order_ratio: 0.1
+    max_position_ratio: 0.2
+    max_daily_trade_ratio: 2.0
+    max_positions: 5
+    max_concentration: 0.3
+  stop_loss:
+    warning_ratio: 0.05
+    auto_stop_ratio: 0.10
+  emergency:
+    max_drawdown_limit: 0.20
+    circuit_breaker_trades: 10
+    circuit_breaker_period: 300
+
+execution:
+  slippage: 0.0005
+  timeout: 30
+  retry:
+    max_attempts: 3
+    initial_delay: 1.0
+  order_type: "market"
+
+backtest:
+  initial_capital: 100000.0
+  commission_rate: 0.0005
+  slippage: 0.0005
+  benchmark: "BTC-USDT"
+
+monitoring:
+  log_level: "INFO"
+  metrics_interval: 1
+  alert_enabled: true
+
+storage:
+  type: "sqlite"
+  path: "./data/trading.db"
+  backup_interval: 300
